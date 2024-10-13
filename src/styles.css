@@ -51,6 +51,7 @@ h1 {
   font-weight: 400;
   line-height: 0.8;
   margin: 0;
+  color:rgb(204, 204, 204);
 }
 
 h2 {
@@ -58,6 +59,7 @@ h2 {
   font-weight: 400;
   margin: 0;
   padding-top: 1rem;
+  color:rgb(204, 204, 204);
 }
 
 h3 {
@@ -71,6 +73,7 @@ p {
   line-height: 1.5;
   margin-bottom: 0;
   font-weight: 300;
+  color:rgb(204, 204, 204);
 }
 
 p.large {
@@ -94,7 +97,7 @@ li::marker {
 }
 
 a {
-  color: black;
+  color: rgb(0, 0, 0);
   text-decoration: none;
 }
 

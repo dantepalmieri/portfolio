@@ -16,15 +16,15 @@ import React from "react";
  * Need an image? Check out https://unsplash.com to download a image you
  * freely use on your site.
  */
-import image from "../images/motion-background.jpg";
+import image from "../images/black-small-stars.jpg";
 
-const imageAltText = "purple and blue abstract background";
+const imageAltText = "palm tree under the moon blue background.";
 
 /**
  * Sort description that expands on your title on the Home component.
  */
 const description =
-  "I'm a UI/UX student studying at Barnett Technical University. I enjoy creating unique and simplistic user interfaces in creative ways.";
+  "I'm a Computer Engineering student at Northern Arizona University with a passion for Engineering and Design.";
 
 /**
  * List of some of skills or technologies you work on, are learning,
@@ -53,7 +53,7 @@ const About = () => {
       <img className="background" src={image} alt={imageAltText} />
       <div
         style={{
-          backgroundColor: "white",
+          backgroundColor: "rgb(12,45,59)",
           width: "50%",
           padding: "4rem",
           margin: "3rem auto",
@@ -70,6 +70,7 @@ const About = () => {
             fontSize: "1.25rem",
             margin: "2rem 3rem",
             gap: "3rem",
+            color: "rgb(204, 204, 204)",
           }}
         >
           {skillsList.map((skill) => (
