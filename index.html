@@ -8,17 +8,27 @@
     
     <title>Dante Palmieri | Computer Engineer</title>
     
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
     <!-- Stylesheets -->
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        ::selection {
+            background: var(--primary-color);
+            color: var(--background-dark);
+        }
+    </style>
 </head>
 <body>
     <!-- Header Section -->
     <header>
-        <h1>Hello, I'm Dante Palmieri</h1>
+        <h1>Hi, I'm Dante Palmieri</h1>
         <h2>Computer Engineer</h2>
-        <p>I am currently in my undergrad at NAU pursuing a B.S. in Computer Engineering.<br>
-            Working @ NAU ITS as a Student Technician.
+        <p>I am currently in pursuing a B.S. in Computer Engineering at Northern Arizona University.<br>
+            Also working @ NAU Information Technology Services as a Student Technician.
         </p>
         <div class="header-buttons">
             <a href="assets/resume.pdf" class="btn" target="_blank" rel="noopener noreferrer">Resume</a>
@@ -34,11 +44,13 @@
     <!-- Navigation -->
     <nav class="toolbar" aria-label="Main navigation">
         <a href="#" class="nav-brand">DJP</a>
-        <ul>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
+        <div class="tabs-container">
+            <ul class="tabs">
+                <li><a href="#projects" class="tab">Projects</a></li>
+                <li><a href="#skills" class="tab">Skills</a></li>
+                <li><a href="#contact" class="tab">Contact</a></li>
+            </ul>
+        </div>
     </nav>
 
     <!-- Projects Section -->
@@ -71,7 +83,22 @@
     <section id="skills">
         <div class="section-content">
             <h2>Skills</h2>
-            <p>This section will list my skills</p>
+            <div class="skills-grid">
+                <!-- Programming Languages -->
+                <div class="skill-card">
+                    <i class="fab fa-python"></i>
+                    <h3>Python</h3>
+                </div>
+                <div class="skill-card">
+                    <i class="fab fa-js"></i>
+                    <h3>JavaScript</h3>
+                </div>
+                <div class="skill-card">
+                    <i class="fab fa-java"></i>
+                    <h3>Java</h3>
+                </div>
+                <!-- Add more skill cards as needed -->
+            </div>
         </div>
     </section>
 
