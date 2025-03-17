@@ -11,26 +11,30 @@ body {
 
 header {
     color: #2a2a2b;
-    padding: 100px 0 20px;
+    padding: 75px 0 20px;
     text-align: center;
+}
+
+
+h1 {
+    margin: 20px 0;
+    font-size: 3em
 }
 
 header h2 {
     margin: 0;
-    font-size: 1.5em;
+    font-size: 2em;
     color: #2a2a2b;
-}
-
-h1 {
-    margin: 10px 0;
+    padding: 20px 0;
 }
 
 header p {
-    margin: 10px 0 0;
+    margin: 20px 0 0;
+    font-size: 1.25em;
 }
 
 .header-buttons {
-    margin-top: 20px;
+    margin-top: 30px;
 }
 
 .header-buttons .btn {
@@ -38,27 +42,45 @@ header p {
     margin: 10px;
     padding: 10px 20px;
     font-size: 1em;
-    color: #ffffff;
-    background-color: #2a2a2b;
+    color: #2a2a2b;
+    background-color: transparent;
     text-decoration: none;
+    border: 2px solid #2a2a2b;
     border-radius: 5px;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
+    vertical-align: middle;
 }
 
 .header-buttons .btn:hover {
-    background-color: #555555;
+    background-color: #2a2a2b;
+    color: #ffffff;
 }
 
 .header-buttons .icon-btn {
     display: inline-block;
     margin: 10px;
-    padding: 10px 20px;
-    font-size: 1em;
-    color: #ffffff;
-    background-color: #2a2a2b;
+    font-size: 1.5em;
+    color: #2a2a2b;
     text-decoration: none;
-    border-radius: 5px;
     transition: color 0.3s ease;
+    vertical-align: middle;
+    position: relative;
+}
+
+.header-buttons .icon-btn::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -5px;
+    left: 50%;
+    background-color: #2a2a2b;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.header-buttons .icon-btn:hover::after {
+    width: 100%;
 }
 
 .header-buttons .icon-btn:hover {
