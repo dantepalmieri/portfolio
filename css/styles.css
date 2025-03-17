@@ -79,6 +79,74 @@ p {
     width: var(--container-width);
     margin: 0 auto;
     padding: 2rem;
+    display: flex;           /* Add this */
+    flex-direction: column;  /* Add this */
+    align-items: center;     /* Add this */
+}
+
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 400px));
+    gap: var(--spacing-lg);
+    width: 100%;
+    max-width: calc(var(--max-width) - 4rem);
+    padding: 0;
+    margin: 0 auto;
+    justify-content: center;
+}
+
+.project-card {
+    background: var(--background-white);
+    border-radius: 8px;
+    padding: var(--spacing-md);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+}
+
+.project-card h3 {
+    margin-top: 0;
+    color: var(--primary-color);
+    text-align: center;;
+}
+
+.project-card p {
+    font-size: 0.9em;
+    line-height: 1.5;
+    margin: var(--spacing-md) 0;
+}
+
+.project-card p .icon-btn {
+    margin-left: 8px;
+    color: var(--primary-color);
+    text-decoration: none;
+    vertical-align: middle;
+}
+
+.project-card p .icon-btn:hover {
+    color: var(--secondary-color);
+}
+
+.project-links {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: var(--spacing-md);
+}
+
+.project-links .icon-btn {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 1.2em;
+    transition: color 0.3s ease;
+}
+
+.project-links .icon-btn:hover {
+    color: var(--secondary-color);
 }
 
 /* 5. Navigation
@@ -90,12 +158,10 @@ nav.toolbar {
     top: 0;
     height: var(--navbar-height);
     width: 100%;
-    text-align: center;
     z-index: 1000;
-    padding: 0;
+    padding: 0 2rem;
     display: flex;
     align-items: center;
-    justify-content: center;
 }
 
 nav.toolbar ul {
@@ -105,6 +171,9 @@ nav.toolbar ul {
     display: flex;
     align-items: center;
     height: 100%;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 nav.toolbar li {
@@ -123,6 +192,19 @@ nav.toolbar a {
 
 nav.toolbar a:hover {
     text-decoration: underline;
+}
+
+.nav-brand {
+    color: var(--text-light);
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.5em;
+    letter-spacing: 2px;
+    transition: color 0.3s ease;
+}
+
+.nav-brand:hover {
+    color: var(--secondary-color);
 }
 
 /* 6. Buttons & Links
@@ -147,7 +229,7 @@ nav.toolbar a:hover {
 
 .header-buttons .btn:hover {
     background-color: var(--primary-color);
-    color: var(--text-light);
+    color: var (--text-light);
 }
 
 .header-buttons .icon-btn {
@@ -220,7 +302,12 @@ section {
 }
 
 #Projects, #Skills, #contact {
-    background: var(--background-white);
+    background: var(--background-light);
+    scroll-margin-top: var(--navbar-height);
+}
+
+#projects, #skills, #contact {
+    background: var(--background-light);
     scroll-margin-top: var(--navbar-height);
 }
 
