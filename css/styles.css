@@ -222,16 +222,16 @@ p {
    ============================================== */
 nav.toolbar {
     background-color: var(--background-dark);
-    border: 1px solid var(--primary-color); /* Added full border */
     color: var(--text-light);
     position: fixed;
     top: 0;
     height: var(--navbar-height);
     width: 100%;
     z-index: 1000;
-    padding: 0;
+    padding: 0 2rem;
     display: flex;
-    align-items: stretch;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .nav-brand {
@@ -241,16 +241,25 @@ nav.toolbar {
     font-size: 1.5em;
     letter-spacing: 2px;
     transition: all 0.2s ease;
-    padding: 0 2rem;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    border-right: 1px solid var(--primary-color); /* Add this line */
+    padding: 0.5rem 0;
+}
+
+.nav-brand:hover {
+    color: var(--secondary-color);
+}
+
+.nav-brand.active {
+    color: var(--primary-color);
 }
 
 .tabs-container {
-    height: 100%;
-    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
 nav.toolbar ul.tabs {
@@ -258,59 +267,46 @@ nav.toolbar ul.tabs {
     padding: 0;
     margin: 0;
     display: flex;
-    align-items: stretch; /* Changed from flex-end to stretch */
-    height: 100%;
+    align-items: center;
+    gap: 2rem;
 }
 
 nav.toolbar li {
     margin: 0;
-    height: 100%; /* Changed from 90% to 100% */
 }
 
 nav.toolbar .tab {
     color: var(--text-light);
     text-decoration: none;
-    padding: 0 2rem;
-    height: 100%;
-    display: flex;
-    align-items: center;
+    padding: 0.5rem 1.5rem;
+    display: inline-block;
     background-color: transparent;
-    border-right: 1px solid var(--primary-color); /* Changed to only right border */
-    margin: 0; /* Remove margin */
+    border: 1px solid var(--primary-color);
+    border-radius: 4px;
     position: relative;
     transition: all 0.2s ease;
 }
 
 nav.toolbar .tab:hover {
-    background-color: rgba(255, 255, 255, 0.2); /* Increased opacity for brighter hover */
-    color: var(--primary-color);
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
 }
 
 nav.toolbar .tab.active {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.15);
     color: var(--primary-color);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
 }
 
 nav.toolbar .tab.active:hover {
-    background-color: rgba(255, 255, 255, 0.25); /* Brighter hover for active tab */
-}
-
-/* Navigation styles */
-nav.toolbar .tab.active,
-.nav-brand.active {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: var(--primary-color);
-}
-
-nav.toolbar .tab:hover,
-.nav-brand:hover {
     background-color: rgba(255, 255, 255, 0.2);
-    color: var(--primary-color);
+    transform: translateY(-2px);
 }
 
-nav.toolbar .tab.active:hover,
+/* Navigation styles - Keep for any remaining references */
 .nav-brand.active:hover {
-    background-color: rgba(255, 255, 255, 0.25);
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
 
