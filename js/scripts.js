@@ -1,9 +1,6 @@
-/**
- * Initialize smooth scrolling functionality for navigation links
- * when the DOM content is loaded.
- */
+// run after the dom is ready
 document.addEventListener('DOMContentLoaded', function() {
-    // Add active tab functionality
+    // active tab tracking
     const tabs = document.querySelectorAll('.tab');
     const navBrand = document.querySelector('.nav-brand');
     
@@ -12,17 +9,17 @@ document.addEventListener('DOMContentLoaded', function() {
         const navHeight = document.querySelector('nav.toolbar').offsetHeight;
         const sections = document.querySelectorAll('section');
 
-        // Remove active class from all tabs and brand
+        // clear all active states
         tabs.forEach(tab => tab.classList.remove('active'));
         navBrand.classList.remove('active');
 
-        // Check if we're at the top of the page
+        // if scrolled above the first section, highlight the brand
         if (scrollPosition < sections[0].offsetTop - navHeight) {
             navBrand.classList.add('active');
             return;
         }
 
-        // Check other sections
+        // highlight the tab matching the current section
         sections.forEach((section, index) => {
             const sectionTop = section.offsetTop - navHeight - 10;
             const sectionBottom = sectionTop + section.offsetHeight;
@@ -33,22 +30,43 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Set active tab on scroll
+    // update active tab on scroll and on initial load
     window.addEventListener('scroll', setActiveTab);
-    // Set active tab on page load
     setActiveTab();
+
+    // theme toggle setup
+    const themeToggle = document.querySelector('.theme-toggle');
+    const themeIcon = themeToggle.querySelector('i');
+
+    // sync icon with theme applied before page load
+    if (document.documentElement.getAttribute('data-theme') === 'light') {
+        themeIcon.classList.replace('fa-sun', 'fa-moon');
+    }
+
+    themeToggle.addEventListener('click', function() {
+        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+        if (isLight) {
+            document.documentElement.removeAttribute('data-theme');
+            themeIcon.classList.replace('fa-moon', 'fa-sun');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+            themeIcon.classList.replace('fa-sun', 'fa-moon');
+            localStorage.setItem('theme', 'light');
+        }
+    });
     
-    // Select all navigation links including the brand
+    // smooth scroll for all nav links
     const navLinks = document.querySelectorAll('nav a');
     
-    // Add click event listener to each navigation link
+    // handle click on each nav link
     navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
             
             const href = this.getAttribute('href');
             
-            // If it's the home button (#)
+            // home button scrolls to top
             if (href === '#') {
                 window.scrollTo({
                     top: 0,
@@ -57,22 +75,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
             
-            // For other navigation links
+            // scroll to the target section
             const targetId = href.substring(1);
             const targetSection = document.getElementById(targetId);
             
             if (targetSection) {
-                // Get navbar height to offset scroll position
                 const navbarHeight = document.querySelector('nav.toolbar').offsetHeight;
-                
-                // Get the target's position relative to the viewport
                 const targetPosition = targetSection.getBoundingClientRect().top;
-                // Get the current scroll position
                 const startPosition = window.pageYOffset;
-                // Calculate the target scroll position with navbar offset
                 const offset = targetPosition + startPosition - navbarHeight;
                 
-                // Smooth scroll to target
                 window.scrollTo({
                     top: offset,
                     behavior: 'smooth'
