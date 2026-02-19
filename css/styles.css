@@ -175,25 +175,25 @@ p {
 /* skills grid */
 .skills-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: var(--spacing-lg);
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-md);
     width: 100%;
     max-width: calc(var(--max-width) - 4rem);
-    padding: 2rem 0;
+    padding: 1.5rem 0;
     margin: 0 auto;
 }
 
 .skill-card {
     background: var(--background-dark);
     border: 1px solid var(--primary-color);
-    padding: var(--spacing-md);
+    padding: var(--spacing-sm);
     text-align: center;
     transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 150px;
+    min-height: 110px;
 }
 
 .skill-card:hover {
@@ -203,14 +203,14 @@ p {
 }
 
 .skill-card i {
-    font-size: 2.5em;
-    margin-bottom: var(--spacing-sm);
+    font-size: 2em;
+    margin-bottom: 6px;
     color: var(--primary-color);
 }
 
 .skill-card h3 {
-    margin: var(--spacing-sm) 0 0;
-    font-size: 1.1em;
+    margin: 4px 0 0;
+    font-size: 0.9em;
     color: var(--text-light);
 }
 
@@ -485,6 +485,80 @@ footer p {
     margin: 0;
 }
 
+/* contact form */
+.contact-form {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: left;
+}
+
+.form-group label {
+    font-size: 0.9em;
+    color: var(--secondary-color);
+    letter-spacing: 1px;
+}
+
+.form-group input,
+.form-group textarea {
+    background: transparent;
+    border: 1px solid var(--primary-color);
+    color: var(--text-color);
+    font-family: var(--font-mono);
+    font-size: 0.95em;
+    padding: 0.6rem 0.8rem;
+    outline: none;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+    resize: vertical;
+    border-radius: 0;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: var(--secondary-color);
+    opacity: 0.6;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.25);
+    border-color: var(--primary-color);
+}
+
+.submit-btn {
+    align-self: flex-start;
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: 1em;
+}
+
+.submit-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.form-success {
+    text-align: center;
+    padding: var(--spacing-lg);
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+}
+
+/* light mode form overrides */
+[data-theme="light"] .form-group input:focus,
+[data-theme="light"] .form-group textarea:focus {
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
+}
+
 /* global link styles */
 a {
     color: var(--primary-color);
@@ -637,22 +711,24 @@ a:hover {
         grid-template-columns: 1fr;
     }
 
+    /* two columns for skill cards on mobile */
     .skills-grid {
-        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        grid-template-columns: repeat(2, 1fr);
         padding: 1rem 0;
+        gap: var(--spacing-sm);
     }
 
     .section-content {
         width: 100%;
         padding: 0.5rem;
     }
-}
 
-/* light mode mobile menu background */
-[data-theme="light"] nav.toolbar .tabs-container {
-    background-color: #ffffff;
-}
+    /* light mode mobile menu */
+    [data-theme="light"] nav.toolbar .tabs-container {
+        background-color: #ffffff;
+    }
 
-[data-theme="light"] nav.toolbar .tab {
-    border-bottom-color: rgba(0, 0, 0, 0.15);
+    [data-theme="light"] nav.toolbar .tab {
+        border-bottom-color: rgba(0, 0, 0, 0.15);
+    }
 }
