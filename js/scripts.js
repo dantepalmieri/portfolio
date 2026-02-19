@@ -56,6 +56,32 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
+    // hamburger menu
+    const hamburger = document.querySelector('.hamburger');
+    const hamburgerIcon = hamburger.querySelector('i');
+    const nav = document.querySelector('nav.toolbar');
+
+    function closeMenu() {
+        nav.classList.remove('nav-open');
+        hamburgerIcon.classList.replace('fa-times', 'fa-bars');
+        hamburger.setAttribute('aria-expanded', 'false');
+    }
+
+    hamburger.addEventListener('click', function() {
+        const isOpen = nav.classList.toggle('nav-open');
+        hamburgerIcon.classList.toggle('fa-bars', !isOpen);
+        hamburgerIcon.classList.toggle('fa-times', isOpen);
+        hamburger.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    // close menu when a tab link is clicked
+    tabs.forEach(tab => tab.addEventListener('click', closeMenu));
+
+    // close menu when clicking outside the navbar
+    document.addEventListener('click', function(e) {
+        if (!nav.contains(e.target)) closeMenu();
+    });
+
     // smooth scroll for all nav links
     const navLinks = document.querySelectorAll('nav a');
     
