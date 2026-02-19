@@ -1,50 +1,61 @@
 // run after the dom is ready
 document.addEventListener('DOMContentLoaded', function() {
-    // active tab tracking
+
+    // grab all the elements we'll need throughout the script
     const tabs = document.querySelectorAll('.tab');
     const navBrand = document.querySelector('.nav-brand');
-    
+    const nav = document.querySelector('nav.toolbar');
+    const hamburger = document.querySelector('.hamburger');
+    const hamburgerIcon = hamburger.querySelector('i');
+    const themeToggle = document.querySelector('.theme-toggle');
+    const themeIcon = themeToggle.querySelector('i');
+    const navLinks = document.querySelectorAll('nav a');
+    const contactForm = document.querySelector('.contact-form');
+
+    // --- active tab highlighting ---
+
     function setActiveTab() {
         const scrollPosition = window.scrollY;
-        const navHeight = document.querySelector('nav.toolbar').offsetHeight;
+        const navHeight = nav.offsetHeight;
         const sections = document.querySelectorAll('section');
 
-        // clear all active states
-        tabs.forEach(tab => tab.classList.remove('active'));
+        // clear all active states before re-evaluating
+        for (let i = 0; i < tabs.length; i++) {
+            tabs[i].classList.remove('active');
+        }
         navBrand.classList.remove('active');
 
-        // if scrolled above the first section, highlight the brand
+        // if we haven't scrolled past the first section yet, highlight the brand
         if (scrollPosition < sections[0].offsetTop - navHeight) {
             navBrand.classList.add('active');
             return;
         }
 
-        // highlight the tab matching the current section
-        sections.forEach((section, index) => {
-            const sectionTop = section.offsetTop - navHeight - 10;
-            const sectionBottom = sectionTop + section.offsetHeight;
-            
+        // highlight the tab whose section is currently in view
+        for (let i = 0; i < sections.length; i++) {
+            const sectionTop = sections[i].offsetTop - navHeight - 10;
+            const sectionBottom = sectionTop + sections[i].offsetHeight;
+
             if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
-                tabs[index].classList.add('active');
+                tabs[i].classList.add('active');
             }
-        });
+        }
     }
 
-    // update active tab on scroll and on initial load
+    // update active tab on scroll and once on initial load
     window.addEventListener('scroll', setActiveTab);
     setActiveTab();
 
-    // theme toggle setup
-    const themeToggle = document.querySelector('.theme-toggle');
-    const themeIcon = themeToggle.querySelector('i');
+    // --- theme toggle ---
 
-    // sync icon with theme applied before page load
+    // sync the icon with whatever theme was set before the page loaded
     if (document.documentElement.getAttribute('data-theme') === 'light') {
         themeIcon.classList.replace('fa-sun', 'fa-moon');
     }
 
     themeToggle.addEventListener('click', function() {
         const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+
         if (isLight) {
             document.documentElement.removeAttribute('data-theme');
             themeIcon.classList.replace('fa-moon', 'fa-sun');
@@ -55,11 +66,8 @@ document.addEventListener('DOMContentLoaded', function() {
             localStorage.setItem('theme', 'light');
         }
     });
-    
-    // hamburger menu
-    const hamburger = document.querySelector('.hamburger');
-    const hamburgerIcon = hamburger.querySelector('i');
-    const nav = document.querySelector('nav.toolbar');
+
+    // --- hamburger menu ---
 
     function closeMenu() {
         nav.classList.remove('nav-open');
@@ -74,25 +82,27 @@ document.addEventListener('DOMContentLoaded', function() {
         hamburger.setAttribute('aria-expanded', String(isOpen));
     });
 
-    // close menu when a tab link is clicked
-    tabs.forEach(tab => tab.addEventListener('click', closeMenu));
+    // close the menu whenever a tab link is clicked
+    for (let i = 0; i < tabs.length; i++) {
+        tabs[i].addEventListener('click', closeMenu);
+    }
 
-    // close menu when clicking outside the navbar
-    document.addEventListener('click', function(e) {
-        if (!nav.contains(e.target)) closeMenu();
+    // close the menu when clicking anywhere outside the navbar
+    document.addEventListener('click', function(clickEvent) {
+        if (!nav.contains(clickEvent.target)) {
+            closeMenu();
+        }
     });
 
-    // smooth scroll for all nav links
-    const navLinks = document.querySelectorAll('nav a');
-    
-    // handle click on each nav link
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            
+    // --- smooth scrolling ---
+
+    for (let i = 0; i < navLinks.length; i++) {
+        navLinks[i].addEventListener('click', function(clickEvent) {
+            clickEvent.preventDefault();
+
             const href = this.getAttribute('href');
-            
-            // home button scrolls to top
+
+            // the brand link always scrolls back to the very top
             if (href === '#') {
                 window.scrollTo({
                     top: 0,
@@ -100,40 +110,45 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
                 return;
             }
-            
-            // scroll to the target section
+
+            // scroll to the section matching the link's href
             const targetId = href.substring(1);
             const targetSection = document.getElementById(targetId);
-            
+
             if (targetSection) {
-                const navbarHeight = document.querySelector('nav.toolbar').offsetHeight;
+                const navbarHeight = nav.offsetHeight;
                 const targetPosition = targetSection.getBoundingClientRect().top;
                 const startPosition = window.pageYOffset;
                 const offset = targetPosition + startPosition - navbarHeight;
-                
+
                 window.scrollTo({
                     top: offset,
                     behavior: 'smooth'
                 });
             }
         });
-    });
+    }
 
-    // contact form submission via formspree
-    const contactForm = document.querySelector('.contact-form');
+    // --- contact form submission via formspree ---
+
     if (contactForm) {
-        contactForm.addEventListener('submit', async function(e) {
-            e.preventDefault();
+        contactForm.addEventListener('submit', async function(submitEvent) {
+            submitEvent.preventDefault();
+
             const submitBtn = contactForm.querySelector('.submit-btn');
             submitBtn.textContent = 'sending...';
             submitBtn.disabled = true;
 
+            // build form data outside the fetch call to keep things readable
+            const formData = new FormData(contactForm);
+
             try {
                 const response = await fetch(contactForm.action, {
                     method: 'POST',
-                    body: new FormData(contactForm),
+                    body: formData,
                     headers: { 'Accept': 'application/json' }
                 });
+
                 if (response.ok) {
                     contactForm.innerHTML = '<p class="form-success">message sent! i\'ll get back to you soon.</p>';
                 } else {
@@ -148,4 +163,5 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
 });
