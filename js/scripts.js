@@ -129,6 +129,177 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // --- expandable project cards (modal) ---
+
+    const projectCards = document.querySelectorAll('.project-card');
+    const modalOverlay = document.querySelector('.project-modal-overlay');
+    const modalTitle = modalOverlay.querySelector('.modal-title');
+    const modalDescription = modalOverlay.querySelector('.modal-description');
+    const galleryViewport = modalOverlay.querySelector('.gallery-viewport');
+    const galleryContainer = modalOverlay.querySelector('.modal-gallery');
+    const galleryCounter = modalOverlay.querySelector('.gallery-counter');
+    const modalLinks = modalOverlay.querySelector('.modal-links');
+    const prevBtn = modalOverlay.querySelector('.gallery-prev');
+    const nextBtn = modalOverlay.querySelector('.gallery-next');
+    const closeBtn = modalOverlay.querySelector('.modal-close');
+
+    let galleryItems = [];
+    let currentSlide = 0;
+
+    // render the current slide into the viewport
+    function showSlide(index) {
+        // clear previous content
+        galleryViewport.innerHTML = '';
+
+        if (galleryItems.length === 0) {
+            return;
+        }
+
+        // clamp index to valid range
+        if (index < 0) {
+            index = galleryItems.length - 1;
+        }
+        if (index >= galleryItems.length) {
+            index = 0;
+        }
+        currentSlide = index;
+
+        const item = galleryItems[currentSlide];
+
+        if (item.type === 'video') {
+            const video = document.createElement('video');
+            video.src = item.src;
+            video.controls = true;
+            video.muted = true;
+            video.alt = item.alt;
+            galleryViewport.appendChild(video);
+        }
+        else {
+            const img = document.createElement('img');
+            img.src = item.src;
+            img.alt = item.alt;
+            galleryViewport.appendChild(img);
+        }
+
+        // update counter text
+        galleryCounter.textContent = (currentSlide + 1) + ' / ' + galleryItems.length;
+    }
+
+    // open the modal with data from a clicked card
+    function openModal(card) {
+        modalTitle.textContent = card.dataset.title;
+        modalDescription.textContent = card.dataset.description;
+
+        // parse gallery data
+        galleryItems = JSON.parse(card.dataset.gallery);
+        currentSlide = 0;
+
+        // show or hide gallery section
+        if (galleryItems.length > 0) {
+            galleryContainer.classList.add('has-items');
+            showSlide(0);
+        }
+        else {
+            galleryContainer.classList.remove('has-items');
+            galleryCounter.textContent = '';
+        }
+
+        // build project link if one exists
+        modalLinks.innerHTML = '';
+        if (card.dataset.link) {
+            const anchor = document.createElement('a');
+            anchor.href = card.dataset.link;
+            anchor.className = 'icon-btn';
+            anchor.target = '_blank';
+            anchor.rel = 'noopener noreferrer';
+
+            if (card.dataset.linkType === 'logo') {
+                const logo = document.createElement('img');
+                logo.src = card.dataset.linkSrc;
+                logo.alt = 'Project Website';
+                logo.className = 'project-logo';
+                anchor.appendChild(logo);
+
+                // add "Website" label next to the logo
+                const label = document.createElement('span');
+                label.className = 'link-label';
+                label.textContent = 'Website';
+                anchor.appendChild(label);
+            }
+            else {
+                const icon = document.createElement('i');
+                icon.className = card.dataset.linkIcon;
+                anchor.appendChild(icon);
+            }
+
+            // add label text next to the link if provided
+            if (card.dataset.linkLabel) {
+                const label = document.createElement('span');
+                label.className = 'link-label';
+                label.textContent = card.dataset.linkLabel;
+                anchor.appendChild(label);
+            }
+
+            modalLinks.appendChild(anchor);
+        }
+
+        // reveal the overlay
+        modalOverlay.classList.add('active');
+        modalOverlay.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+    }
+
+    // close the modal and reset state
+    function closeModal() {
+        modalOverlay.classList.remove('active');
+        modalOverlay.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+
+        // pause any playing video
+        const activeVideo = galleryViewport.querySelector('video');
+        if (activeVideo) {
+            activeVideo.pause();
+        }
+    }
+
+    // card click opens the modal
+    for (let i = 0; i < projectCards.length; i++) {
+        projectCards[i].addEventListener('click', function() {
+            openModal(this);
+        });
+    }
+
+    // gallery arrow navigation
+    prevBtn.addEventListener('click', function(clickEvent) {
+        clickEvent.stopPropagation();
+        showSlide(currentSlide - 1);
+    });
+
+    nextBtn.addEventListener('click', function(clickEvent) {
+        clickEvent.stopPropagation();
+        showSlide(currentSlide + 1);
+    });
+
+    // close via button
+    closeBtn.addEventListener('click', function(clickEvent) {
+        clickEvent.stopPropagation();
+        closeModal();
+    });
+
+    // close via clicking the backdrop
+    modalOverlay.addEventListener('click', function(clickEvent) {
+        if (clickEvent.target === modalOverlay) {
+            closeModal();
+        }
+    });
+
+    // close with the escape key
+    document.addEventListener('keydown', function(keyEvent) {
+        if (keyEvent.key === 'Escape') {
+            closeModal();
+        }
+    });
+
     // --- contact form submission via formspree ---
 
     if (contactForm) {

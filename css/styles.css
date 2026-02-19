@@ -23,6 +23,11 @@
 html {
     height: 100%;
     scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
 }
 
 body {
@@ -32,6 +37,7 @@ body {
     line-height: 1.6;
     margin: 0;
     padding: 0;
+    overflow-x: hidden;
 }
 
 /* prevent unintended cursor animation on all headings */
@@ -39,18 +45,15 @@ h1, h2, h3 {
     position: relative;
 }
 
-/* blinking cursor on h1 and section headings only */
+/* blinking cursor on hero heading only */
+h1::before {
+    content: '> ';
+}
+
 h1::after {
     content: '_';
     position: absolute;
     right: -25px;
-    animation: cursor 1s infinite;
-}
-
-section h2::after {
-    content: '_';
-    position: absolute;
-    right: -15px;
     animation: cursor 1s infinite;
 }
 
@@ -96,13 +99,22 @@ p {
 
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 400px));
+    grid-template-columns: repeat(2, minmax(300px, 400px));
     gap: var(--spacing-lg);
     width: 100%;
     max-width: calc(var(--max-width) - 4rem);
     padding: 0;
     margin: 0 auto;
     justify-content: center;
+}
+
+/* center the last card when it's alone on its row */
+.project-card:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    width: 100%;
+    max-width: 400px;
+    min-width: 300px;
+    justify-self: center;
 }
 
 .project-card {
@@ -112,10 +124,186 @@ p {
     padding: var(--spacing-md);
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
     transition: transform 0.3s ease;
+    cursor: pointer;
 }
 
 .project-card:hover {
     transform: translateY(-5px);
+}
+
+/* expand icon hint in bottom-right corner */
+.expand-hint {
+    display: block;
+    text-align: right;
+    margin-top: var(--spacing-sm);
+    color: var(--secondary-color);
+    font-size: 0.85em;
+    transition: color 0.3s ease;
+}
+
+.project-card:hover .expand-hint {
+    color: var(--primary-color);
+}
+
+/* --- project modal overlay --- */
+.project-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.project-modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* modal box */
+.project-modal {
+    background: var(--background-dark);
+    border: 1px solid var(--primary-color);
+    padding: 2rem;
+    width: 90%;
+    max-width: 750px;
+    max-height: 85vh;
+    overflow-y: auto;
+    position: relative;
+    transform: scale(0.85);
+    transition: transform 0.3s ease;
+}
+
+.project-modal-overlay.active .project-modal {
+    transform: scale(1);
+}
+
+/* close button */
+.modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    font-size: 1.4em;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    font-family: var(--font-mono);
+}
+
+.modal-close:hover {
+    color: var(--secondary-color);
+}
+
+/* modal content */
+.modal-title {
+    margin: 0 0 1rem 0;
+    color: var(--primary-color);
+    text-align: center;
+}
+
+.modal-description {
+    font-size: 0.95em;
+    line-height: 1.6;
+    text-align: center;
+    margin-bottom: var(--spacing-md);
+}
+
+/* --- gallery carousel --- */
+.modal-gallery {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+/* show gallery only when it has content */
+.modal-gallery.has-items {
+    display: flex;
+}
+
+.gallery-viewport {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    max-height: 450px;
+    overflow: hidden;
+}
+
+/* images and videos inside the viewport */
+.gallery-viewport img,
+.gallery-viewport video {
+    max-width: 100%;
+    max-height: 450px;
+    border: 1px solid var(--primary-color);
+    object-fit: contain;
+    display: block;
+}
+
+/* arrow buttons */
+.gallery-arrow {
+    background: none;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    font-size: 1.2em;
+    cursor: pointer;
+    padding: 0.6rem 0.8rem;
+    transition: background 0.2s ease, color 0.2s ease;
+    font-family: var(--font-mono);
+    flex-shrink: 0;
+}
+
+.gallery-arrow:hover {
+    background: var(--primary-color);
+    color: var(--background-dark);
+}
+
+/* slide counter text */
+.gallery-counter {
+    text-align: center;
+    font-size: 0.8em;
+    color: var(--secondary-color);
+    margin-bottom: var(--spacing-md);
+}
+
+/* modal project links (between description and gallery) */
+.modal-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+}
+
+.modal-links .icon-btn {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 1.2em;
+    transition: color 0.3s ease;
+}
+
+.modal-links .icon-btn:hover {
+    color: var(--secondary-color);
+}
+
+/* label text next to logo/icon in modal links */
+.modal-links .icon-btn .link-label {
+    margin-left: 0.4em;
+    font-size: 0.95em;
+    vertical-align: middle;
+}
+
+/* light mode modal overrides */
+[data-theme="light"] .project-modal-overlay {
+    background: rgba(255, 255, 255, 0.85);
 }
 
 .project-card h3 {
@@ -153,6 +341,32 @@ p {
     text-decoration: none;
     font-size: 1.2em;
     transition: color 0.3s ease;
+}
+
+/* custom project logo image inside icon button */
+.project-links .icon-btn .project-logo,
+.modal-links .icon-btn .project-logo {
+    width: 1.4em;
+    height: 1.4em;
+    object-fit: contain;
+    vertical-align: middle;
+    filter: brightness(0) invert(1);
+    transition: opacity 0.3s ease;
+}
+
+/* dark mode logo is white, light mode logo is black */
+[data-theme="light"] .project-links .icon-btn .project-logo,
+[data-theme="light"] .modal-links .icon-btn .project-logo {
+    filter: brightness(0);
+}
+
+.project-links .icon-btn:hover .project-logo,
+.modal-links .icon-btn:hover .project-logo {
+    opacity: 0.6;
+}
+
+.project-links .icon-btn:hover .project-logo {
+    opacity: 0.6;
 }
 
 .project-links .icon-btn:hover {
@@ -691,6 +905,13 @@ a:hover {
     /* single column project/skill cards */
     .projects-grid {
         grid-template-columns: 1fr;
+    }
+
+    /* last card matches full width on mobile */
+    .project-card:last-child:nth-child(odd) {
+        max-width: none;
+        min-width: 0;
+        grid-column: auto;
     }
 
     /* two columns for skill cards on mobile */
