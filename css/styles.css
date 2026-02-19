@@ -8,6 +8,7 @@
    7. sections
    8. footer
    9. light mode
+   10. mobile / responsive
 */
 
 /* 1. global variables */
@@ -554,4 +555,128 @@ a:hover {
         transparent 50%,
         rgba(0, 0, 0, 0.015) 50%
     );
+}
+
+/* 10. mobile / responsive */
+
+/* hamburger hidden on desktop */
+.hamburger {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text-light);
+    font-size: 1.2em;
+    cursor: pointer;
+    padding: 0.4rem 0.5rem;
+    margin-left: 0.5rem;
+    transition: color 0.3s ease;
+    font-family: var(--font-mono);
+}
+
+.hamburger:hover {
+    color: var(--secondary-color);
+}
+
+@media (max-width: 767px) {
+    /* show hamburger, hide tab links */
+    .hamburger {
+        display: flex;
+        align-items: center;
+    }
+
+    .tabs-container {
+        display: none;
+        position: absolute;
+        top: var(--navbar-height);
+        left: 0;
+        width: 100%;
+        background-color: var(--background-dark);
+        border-top: 1px solid var(--primary-color);
+        z-index: 999;
+        padding: 0.5rem 0;
+    }
+
+    /* show menu when nav has .nav-open */
+    nav.toolbar.nav-open .tabs-container {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    nav.toolbar ul.tabs {
+        flex-direction: column;
+        gap: 0;
+        width: 100%;
+    }
+
+    nav.toolbar ul.tabs li {
+        width: 100%;
+    }
+
+    nav.toolbar .tab {
+        display: block;
+        width: 100%;
+        text-align: center;
+        border: none;
+        border-bottom: 1px solid rgba(128, 128, 128, 0.3);
+        border-radius: 0;
+        padding: 1rem;
+    }
+
+    nav.toolbar .tab:hover {
+        transform: none;
+    }
+
+    nav.toolbar .tab.active {
+        box-shadow: none;
+    }
+
+    /* scale down hero text */
+    h1 {
+        font-size: 2em;
+    }
+
+    header h1 {
+        font-size: 2em;
+    }
+
+    header h2 {
+        font-size: 1.4em;
+    }
+
+    header p {
+        font-size: 1em;
+        padding: 0 1rem;
+    }
+
+    /* tighter section padding */
+    section {
+        padding-top: calc(var(--navbar-height) + 0.5rem);
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    /* single column project/skill cards */
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .skills-grid {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        padding: 1rem 0;
+    }
+
+    .section-content {
+        width: 100%;
+        padding: 0.5rem;
+    }
+}
+
+/* light mode mobile menu background */
+[data-theme="light"] nav.toolbar .tabs-container {
+    background-color: #ffffff;
+}
+
+[data-theme="light"] nav.toolbar .tab {
+    border-bottom-color: rgba(0, 0, 0, 0.15);
 }
