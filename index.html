@@ -8,6 +8,9 @@
     
     <title>Dante Palmieri | Computer Engineer</title>
     
+    <!-- favicon (tab bar icon) -->
+    <link rel="icon" type="image/x-icon" href="assets/site_thumb_trans.ico">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -74,27 +77,70 @@
         <div class="section-content">
             <h2>Projects</h2>
             <div class="projects-grid">
-                <div class="project-card">
-                    <h3>Ubuntu Home-Lab</h3>
-                    <p>In this project I repurposed an out of date gaming computer into an
-                    Ubuntu server that I use for media storage and data management.
-                    This project involved Linux, the CLI, Bash, and networking.</p>
+                <!-- boeing autonomous -->
+                <div class="project-card" tabindex="0"
+                     data-title="Autonomous Capstone Project"
+                     data-description="I worked with an eleven person, mechanical and electrical, team to modify a mid-size, stock buggy, making it fully autonomous. As the electro-mechanical lead, I was tasked with setting up wiring and motors for interfacing with each sub-team system. The vehicle uses LiDAR, GPS, and camera-based perception to navigate autonomously."
+                     data-gallery='[{"type":"image","src":"assets/throttle setup.jpg","alt":"Throttle electrical setup"},{"type":"video","src":"assets/stepper_lab.mp4","alt":"Throttle stepper motor lab testing"},{"type":"video","src":"assets/website_video.mp4","alt":"Throttle testing on vehicle"}]'
+                     data-link="https://www.nauautonomousbuggy.com/"
+                     data-link-type="logo"
+                     data-link-src="assets/logo.png">
+                    <h3>Autonomous Capstone Project</h3>
+                    <p>Senior capstone project sponsored by Boeing.
+                        Open up the card to see more details about the project!
+                    </p>
                 </div>
 
-                <div class="project-card">
+                <!-- portfolio website -->
+                <div class="project-card" tabindex="0"
+                     data-title="Portfolio Website"
+                     data-description="A terminal-themed portfolio site featuring dark/light mode, smooth scrolling, and a responsive layout. Built from scratch without any frameworks."
+                     data-gallery='[]'
+                     data-link="https://github.com/dantepalmieri/portfolio"
+                     data-link-type="icon"
+                     data-link-icon="fab fa-github"
+                     data-link-label="GitHub">
                     <h3>Portfolio Website</h3>
-                    <p>My personal portfolio website built using HTML, CSS, and JavaScript.
+                    <p>Static portfolio website built using HTML, CSS, and JavaScript.
                        <br>You're looking at it.
                     </p>
-                    <div class="project-links">
-                        <a href="https://github.com/dantepalmieri/portfolio" class="icon-btn" target="_blank" rel="noopener noreferrer" style="margin-left: auto;">
-                            <i class="fab fa-github" aria-label="GitHub"></i>
-                        </a>
-                    </div>
+                </div>
+
+                <!-- ubuntu home-lab -->
+                <div class="project-card" tabindex="0"
+                     data-title="Ubuntu Home-Lab"
+                     data-description="Repurposed old gaming computer into a server configured with Docker containers for media services, file sharing, and automated backups. Remote setup uses TailScale for secure access and WireGuard VPN for encrypted connections."
+                     data-gallery='[]'>
+                    <h3>Ubuntu Home-Lab</h3>
+                    <p>Ubuntu server that serves as a personal cloud and development sandbox.
+                    </p>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- project modal overlay -->
+    <div class="project-modal-overlay" aria-hidden="true">
+        <div class="project-modal">
+            <button class="modal-close" aria-label="Close project details">
+                <i class="fas fa-times"></i>
+            </button>
+            <h3 class="modal-title"></h3>
+            <p class="modal-description"></p>
+            <div class="modal-links"></div>
+            <!-- gallery carousel -->
+            <div class="modal-gallery">
+                <button class="gallery-arrow gallery-prev" aria-label="Previous">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="gallery-viewport"></div>
+                <button class="gallery-arrow gallery-next" aria-label="Next">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+            <div class="gallery-counter"></div>
+        </div>
+    </div>
 
     <!-- skills section -->
     <section id="skills">
