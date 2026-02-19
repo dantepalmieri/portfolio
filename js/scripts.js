@@ -118,4 +118,34 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    // contact form submission via formspree
+    const contactForm = document.querySelector('.contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const submitBtn = contactForm.querySelector('.submit-btn');
+            submitBtn.textContent = 'sending...';
+            submitBtn.disabled = true;
+
+            try {
+                const response = await fetch(contactForm.action, {
+                    method: 'POST',
+                    body: new FormData(contactForm),
+                    headers: { 'Accept': 'application/json' }
+                });
+                if (response.ok) {
+                    contactForm.innerHTML = '<p class="form-success">message sent! i\'ll get back to you soon.</p>';
+                } else {
+                    submitBtn.textContent = 'send_message()';
+                    submitBtn.disabled = false;
+                    alert('something went wrong. please try again.');
+                }
+            } catch {
+                submitBtn.textContent = 'send_message()';
+                submitBtn.disabled = false;
+                alert('something went wrong. please try again.');
+            }
+        });
+    }
 });
