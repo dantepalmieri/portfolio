@@ -100,6 +100,7 @@ p {
 .projects-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(300px, 400px));
+    grid-auto-rows: minmax(250px, auto);
     gap: var(--spacing-lg);
     width: 100%;
     max-width: calc(var(--max-width) - 4rem);
